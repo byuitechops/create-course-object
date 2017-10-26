@@ -1,0 +1,24 @@
+{
+  "name": "create-course-object",
+  "version": "1.0.0",
+  "description": "Creates a course object for our Canvas conversion tool.",
+  "main": "createCourseObj.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/byuitechops/create-course-object.git"
+  },
+  "author": "Zachary Williams",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/byuitechops/create-course-object/issues"
+  },
+  "homepage": "https://github.com/byuitechops/create-course-object#readme",
+  "dependencies": {
+    "chalk": "^2.3.0",
+    "fixed-width-string": "^1.0.0",
+    "path": "^0.12.7"
+  }
+}

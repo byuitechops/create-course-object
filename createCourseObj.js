@@ -1,7 +1,7 @@
 /*eslint-env node, es6*/
 
 /* Put dependencies here */
-var Course = require('../classes/Course.js');
+var Course = require('./Course.js');
 
 module.exports = (filePath, settings, stepCallback) => {
     /* Create the course object, give it the original filepath, and settings */
