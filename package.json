@@ -1,6 +1,6 @@
 {
   "name": "create-course-object",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Creates a course object for our Canvas conversion tool.",
   "main": "createCourseObj.js",
   "scripts": {
