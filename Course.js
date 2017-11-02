@@ -37,6 +37,11 @@ module.exports = class Course {
         this.content = {};
     }
 
+    getCount() {
+        this.info.linkCounter += 1;
+        return this.info.linkCounter;
+    }
+
     findReportModule(reportModule) {
         return reportModule.name === this.toString();
     }
