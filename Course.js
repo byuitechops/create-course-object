@@ -27,7 +27,12 @@ module.exports = class Course {
             'unzippedFilepath': path.resolve('D2LProcessing'),
             'altUnzippedFilepath': path.resolve('D2LProcessed'),
             'zippedFilepath': path.resolve('D2LReady'),
-            'fileName': filePath.split(path.sep)[filePath.split(path.sep).length - 1]
+            'fileName': filePath.split(path.sep)[filePath.split(path.sep).length - 1],
+            'linkCounter': 0,
+            get counter() {
+                this.info.linkCounter = this.info.linkCounter++;
+                return this.info.linkCounter;
+            }
         };
         this.content = {};
     }
