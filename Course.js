@@ -30,8 +30,8 @@ module.exports = class Course {
             'fileName': filePath.split(path.sep)[filePath.split(path.sep).length - 1],
             'linkCounter': 0,
             get counter() {
-                this.info.linkCounter = this.info.linkCounter++;
-                return this.info.linkCounter;
+                this.linkCounter = this.linkCounter++;
+                return this.linkCounter;
             }
         };
         this.content = {};
