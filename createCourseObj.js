@@ -11,6 +11,11 @@ module.exports = (filePath, settings, stepCallback) => {
         filePath += '.zip';
     }
 
+    if (!filePath) {
+        stepCallback('Filepath is empty');
+        return;
+    }
+
     var course = new Course(filePath, settings);
     /* Create report module for indexer main since course object didn't exist until now */
     course.addModuleReport('createCourseObj');

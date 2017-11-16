@@ -124,7 +124,6 @@ module.exports = class Course {
                 fws(chalk.cyan(moduleName), 15),
                 fws(chalk.blueBright('LAUNCHED'), 8, { align: 'right'})
             );
-            this.success(moduleName, 'Report Module successfully created.');
         }
     }
 
