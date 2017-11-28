@@ -122,7 +122,7 @@ module.exports = class Course {
             this.report.push(new ReportModule(moduleName));
             console.log(
                 fws(chalk.cyan(moduleName), 15),
-                fws(chalk.blueBright('LAUNCHED'), 8, { align: 'right'})
+                fws(chalk.blueBright('LAUNCHED\t'), 8, { align: 'right'})
             );
         }
     }
