@@ -6,6 +6,7 @@ const ReportModule = require('./ReportModule.js');
 const path = require('path');
 const chalk = require('chalk');
 const fws = require('fixed-width-string');
+const convert = require('ansi-html');
 
 module.exports = class Course {
     constructor(filePath, settings) {
@@ -99,8 +100,9 @@ module.exports = class Course {
         } else {
             if (this.settings.debug) {
                 console.log(
+                    'POTATO',
                     fws(chalk.cyan(moduleName), 15),
-                    fws(chalk.greenBright('SUCCESS'), 8, { align: 'right'}),
+                    convert(fws(chalk.greenBright('SUCCESS'), 8, { align: 'right'})),
                     chalk.white(message)
                 );
             }

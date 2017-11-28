@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/byuitechops/create-course-object#readme",
   "dependencies": {
+    "ansi-html": "0.0.7",
     "chalk": "^2.3.0",
     "fixed-width-string": "^1.0.0",
     "path": "^0.12.7",
