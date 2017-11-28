@@ -101,7 +101,7 @@ module.exports = class Course {
             if (this.settings.debug) {
                 console.log(
                     fws(chalk.cyan(moduleName), 15),
-                    fws(convert(chalk.greenBright('SUCCESS')), 8, { align: 'right'})),
+                    fws(convert(chalk.greenBright('SUCCESS')), 8, { align: 'right'}),
                     chalk.white(message)
                 );
             }
