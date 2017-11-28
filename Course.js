@@ -100,9 +100,8 @@ module.exports = class Course {
         } else {
             if (this.settings.debug) {
                 console.log(
-                    'POTATO',
                     fws(chalk.cyan(moduleName), 15),
-                    convert(fws(chalk.greenBright('SUCCESS'), 8, { align: 'right'})),
+                    fws(convert(chalk.greenBright('SUCCESS')), 8, { align: 'right'})),
                     chalk.white(message)
                 );
             }
