@@ -8,7 +8,7 @@ const chalk = require('chalk');
 const fws = require('fixed-width-string');
 
 module.exports = class Course {
-    constructor(filePath, settings) {
+    constructor(courseData) {
         this.report = [
             new ReportModule('main'),
             new ReportModule('preparation'),
@@ -16,25 +16,26 @@ module.exports = class Course {
             new ReportModule('misc')
         ];
         this.settings = {
-            'debug': settings.debug,
-            'readAll': settings.readAll,
-            'online': settings.online,
-            'keepFiles': settings.keepFiles,
-            'deleteCourse': settings.deleteCourse
+            'debug': courseData.settings.debug,
+            'readAll': courseData.settings.readAll,
+            'online': courseData.settings.online,
+            'keepFiles': courseData.settings.keepFiles,
+            'deleteCourse': courseData.settings.deleteCourse
         };
         this.info = {
-            'originalFilepath': path.resolve('D2LOriginal', filePath),
+            'D2LOU': courseData.D2LOU,
+            'originalFilepath': path.resolve('D2LOriginal', courseData.path),
             'unzippedFilepath': path.resolve('D2LProcessing'),
             'altUnzippedFilepath': path.resolve('D2LProcessed'),
             'zippedFilepath': path.resolve('D2LReady'),
-            'fileName': filePath.split(path.sep)[filePath.split(path.sep).length - 1],
+            'fileName': courseData.path.split(path.sep)[courseData.path.split(path.sep).length - 1],
             'linkCounter': 0,
             get counter() {
                 this.linkCounter = this.linkCounter++;
                 return this.linkCounter;
             }
         };
-        this.content = {};
+        this.content = [];
     }
 
     getCount() {
