@@ -21,7 +21,6 @@ module.exports = (courseData, stepCallback) => {
     course.addModuleReport('createCourseObj');
     /* We did it! */
     course.success('createCourseObj', 'Course object creation successful.');
-    console.log(course);
     /* Have the course meet with the missionaries so it can be converted */
     stepCallback(null, course);
 };

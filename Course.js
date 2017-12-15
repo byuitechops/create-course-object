@@ -9,7 +9,6 @@ const fws = require('fixed-width-string');
 
 module.exports = class Course {
     constructor(courseData) {
-        console.log(courseData);
         this.report = [
             new ReportModule('main'),
             new ReportModule('preparation'),
