@@ -23,13 +23,14 @@ module.exports = class Course {
             'deleteCourse': courseData.settings.deleteCourse
         };
         this.info = {
-            'D2LOU': courseData.D2LOU,
-            'originalFilepath': path.resolve('D2LOriginal', courseData.path),
+            'D2LOU': courseData.courseInfo.D2LOU,
+            'originalFilepath': path.resolve('D2LOriginal', courseData.courseInfo.path),
             'unzippedFilepath': path.resolve('D2LProcessing'),
             'altUnzippedFilepath': path.resolve('D2LProcessed'),
             'zippedFilepath': path.resolve('D2LReady'),
-            'fileName': courseData.path.split(path.sep)[courseData.path.split(path.sep).length - 1],
+            'fileName': courseData.courseInfo.path.split(path.sep)[courseData.courseInfo.path.split(path.sep).length - 1],
             'linkCounter': 0,
+            'childModules': courseData.courseInfo.childModules,
             get counter() {
                 this.linkCounter = this.linkCounter++;
                 return this.linkCounter;

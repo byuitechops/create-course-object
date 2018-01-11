@@ -7,12 +7,12 @@ module.exports = (courseData, stepCallback) => {
     /* Create the course object, give it the original filepath, and settings */
 
     /* Check if the filePath contains .ZIP */
-    if (!(/\.zip/i).test(courseData.path)){
-        courseData.path += '.zip';
+    if (!(/\.zip/i).test(courseData.courseInfo.path)){
+        courseData.courseInfo.path += '.zip';
     }
 
-    if (!courseData.path) {
-        stepCallback('Filepath is empty');
+    if (!courseData.courseInfo.path) {
+        stepCallback(new Error('Filepath is empty'));
         return;
     }
 
