@@ -31,6 +31,7 @@ module.exports = class Course {
             'fileName': courseData.courseInfo.path.split(path.sep)[courseData.courseInfo.path.split(path.sep).length - 1],
             'linkCounter': 0,
             'childModules': courseData.courseInfo.childModules,
+            'lessonFolders': courseData.courseInfo.lessonFolders ? courseData.courseInfo.lessonFolders : false,
             get counter() {
                 this.linkCounter = this.linkCounter++;
                 return this.linkCounter;
