@@ -17,10 +17,8 @@ module.exports = (courseData, stepCallback) => {
     }
 
     var course = new Course(courseData);
-    /* Create report module for indexer main since course object didn't exist until now */
-    course.addModuleReport('createCourseObj');
-    /* We did it! */
-    course.success('createCourseObj', 'Course object creation successful.');
+    course.message('Course Object Created');
+    
     /* Have the course meet with the missionaries so it can be converted */
     stepCallback(null, course);
 };

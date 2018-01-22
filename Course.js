@@ -2,19 +2,12 @@
 /*eslint no-console:1*/
 /*global courseObj*/
 
-const ReportModule = require('./ReportModule.js');
 const path = require('path');
 const chalk = require('chalk');
 const fws = require('fixed-width-string');
 
 module.exports = class Course {
     constructor(courseData) {
-        this.report = [
-            new ReportModule('main'),
-            new ReportModule('preparation'),
-            new ReportModule('verifier'),
-            new ReportModule('misc')
-        ];
         this.settings = {
             'debug': courseData.settings.debug,
             'readAll': courseData.settings.readAll,
@@ -37,78 +30,123 @@ module.exports = class Course {
                 return this.linkCounter;
             }
         };
+        this.logs = [];
         this.content = [];
     }
 
-    getCount() {
-        this.info.linkCounter += 1;
-        return this.info.linkCounter;
-    }
+    /* Stack Overflow credit: https://stackoverflow.com/questions/16697791/nodejs-get-filename-of-caller-function/29581862#29581862 */
+    getCallingModule() {
 
-    findReportModule(reportModule) {
-        return reportModule.name === this.toString();
-    }
-
-    /* Adds fatal errors to report for given module */
-    throwFatalErr(moduleName, err) {
-        var index = this.report.findIndex(this.findReportModule, moduleName);
-        if (index < 0) {
-            this.throwErr('misc', `Report Module was not found: ${moduleName}`);
-        } else {
-            console.log(
-                fws(chalk.cyan(moduleName), 15),
-                fws(chalk.bgRed('FATALERR'), 8, { align: 'right'}),
-                chalk.red(err)
-            );
-            this.report[index].fatalErrs.push(err);
-        }
-    }
-
-    /* Adds non-fatal errors to report for given module */
-    throwErr(moduleName, err) {
-        var index = this.report.findIndex(this.findReportModule, moduleName);
-        if (index < 0) {
-            this.throwErr('misc', `Report Module was not found: ${moduleName}`);
-        } else {
-            console.log(
-                fws(chalk.cyan(moduleName), 15),
-                fws(chalk.redBright('ERROR'), 8, { align: 'right'}),
-                chalk.red(err)
-            );
-            this.report[index].errors.push(err);
-        }
-    }
-
-    /* Adds warnings to report for given module */
-    throwWarning(moduleName, warning) {
-        var index = this.report.findIndex(this.findReportModule, moduleName);
-        if (index < 0) {
-            this.throwErr('misc', `Report Module was not found: ${moduleName}`);
-        } else {
-            console.log(
-                fws(chalk.cyan(moduleName), 15),
-                fws(chalk.yellow('WARNING'), 8, { align: 'right'}),
-                chalk.yellowBright(warning)
-            );
-            this.report[index].warnings.push(warning);
-        }
-    }
-
-    /* Adds successful changes to report for given module */
-    success(moduleName, message) {
-        var index = this.report.findIndex(this.findReportModule, moduleName);
-        if (index < 0) {
-            this.throwErr('misc', `Report Module was not found: ${moduleName}`);
-        } else {
-            if (this.settings.debug) {
-                console.log(
-                    fws(chalk.cyan(moduleName), 15),
-                    fws(chalk.greenBright('SUCCESS'), 8, { align: 'right'}),
-                    chalk.white(message)
-                );
+        var callingModule;
+        try {
+            var err = new Error();
+            var currentFile;
+            Error.prepareStackTrace = function (err, stack) {
+                return stack;
+            };
+            var filePaths = err.stack.map(item => item.getFileName());
+            currentFile = path.basename(filePaths[0]);
+            for (var x = 0; x < filePaths.length; x++) {
+                if (path.basename(filePaths[x]) != currentFile) {
+                    var callingPath = path.dirname(filePaths[x]).split(path.sep);
+                    callingModule = callingPath[callingPath.length - 1];
+                    break;
+                }
             }
-            this.report[index].changes.push(message);
+        } catch (e) {}
+        return callingModule;
+    }
+
+    /* Used to log items */
+    log(title, obj) {
+        if (obj == undefined || typeof title != 'string') {
+            console.log(this.getCallingModule(), 'Incorrect inputs into course.log: ', title);
+            return;
         }
+        var logObj = {
+            title: title,
+            location: this.getCallingModule(),
+            data: obj
+        }
+        this.logs.push(logObj);
+        this.console(logObj);
+    }
+
+    /* Used to throw errors */
+    error(err) {
+        this.log('error', {error: err});
+    }
+
+    /* Used to throw warnings */
+    warning(message) {
+        // if (typeof message == 'string')
+        this.log('warning', {message: message});
+    }
+
+    /* Used to throw fatal errors */
+    fatalError(err) {
+        console.log(err);
+        this.log('fatalError', {error: err});
+    }
+
+    /* Takes a string - used for logging one-time actions or displaying things to the console */
+    message(message) {
+        this.log('message', {message: message});
+    }
+
+    console(logObj) {
+
+        function formatMessage(data) {
+            var properties = [];
+            Object.keys(data).forEach(key => {
+               properties.push(`${chalk.gray(key + ':')} ${data[key]}`);
+            });
+            return properties.join(` `);
+        }
+
+
+        var color1 = chalk.blueBright;
+        var color2 = chalk.whiteBright;
+        if (logObj.title == 'error') {
+            color1 = chalk.red;
+            color2 = chalk.redBright;
+        } else if (logObj.title == 'fatalError') {
+            color1 = chalk.bgRed;
+            color2 = chalk.redBright;
+        } else if (logObj.title == 'message') {
+            color1 = chalk.greenBright;
+        } else if (logObj.title == 'warning') {
+            color1 = chalk.yellow;
+            color2 = chalk.yellowBright;
+        }
+
+        console.log(
+            fws(chalk.cyan(logObj.location), 15),
+            color1(`${fws(logObj.title, 15, { align: 'left' })}`),
+            color2(formatMessage(logObj.data))
+        );
+    }
+
+    /* THESE WILL BE REMOVED - just for development */
+    success(module, message) {
+        this.log(module, { message: '% ' + message,});
+    }
+
+    throwWarning(module, message) {
+        this.warning('% ' + message);
+    }
+
+    throwErr(module, err) {
+        this.error('% ' + err);
+    }
+
+    throwFatalErr(module, err) {
+        this.fatalError('% ' + err);
+    }
+
+    addModuleReport(title) {
+        // do nothing
+        console.log(title, '- attempted to create module report');
     }
 
     /* Adds new "junk drawer" item to info */
@@ -116,59 +154,10 @@ module.exports = class Course {
         this.info[propertyName] = value;
     }
 
-    /* Creates a new Report Module */
-    addModuleReport(moduleName) {
-        var index = this.report.findIndex(this.findReportModule, moduleName);
-        if (index > 0) {
-            this.throwErr('misc', `Report Module already created: ${moduleName}`);
-        } else {
-            this.report.push(new ReportModule(moduleName));
-            console.log(
-                fws(chalk.cyan(moduleName), 15),
-                fws(chalk.blueBright('LAUNCHED'), 8, { align: 'right'})
-            );
-        }
+    /* Retrieves the current count on linkCounter */
+    getCount() {
+        this.info.linkCounter += 1;
+        return this.info.linkCounter;
     }
 
-    /* This will check for properties provided in the propertyArray parameter */
-    verifyProperty(propertyName) {
-        /* Check if object contains user-input property in INFO */
-        if (Object.keys(courseObj.info).includes(propertyName)) {
-            return courseObj.info[propertyName];
-        }
-        /* Check if object contains user-input property in SETTINGS */
-        if (Object.keys(courseObj.settings).includes(propertyName)) {
-            return true;
-        }
-        return false;
-    }
-
-    /* Returns files of the given extension */
-    getFilesByType(extension, callback) {
-        var newArr = this.content.filter(file => file.ext === extension);
-        if (newArr.length < 1) {
-            callback('No files found by extension in course content.');
-        } else {
-            callback(null, newArr);
-        }
-    }
-
-    /* Returns files with the given string within their name */
-    getFilesByName(string, callback) {
-        var newArr = this.content.filter(file => file.name.includes(string));
-        if (newArr.length < 1) {
-            callback('No files found by filename in course content.');
-        } else {
-            callback(null, newArr);
-        }
-    }
-
-    getFileName(fileName, callback) {
-        var file = this.content.find(fileMember => fileMember.name === fileName);
-        if (file) {
-            callback(null, file);
-        } else {
-            callback('Filename not found in course content.');
-        }
-    }
 };
