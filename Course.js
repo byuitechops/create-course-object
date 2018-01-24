@@ -96,10 +96,23 @@ module.exports = class Course {
 
     console(logObj) {
 
+        function shortenString(str) {
+            if (str.length > 35) {
+                /* Get left 20 */
+                var strLeft = str.substr(0, 20);
+                /* Get right 20 */
+                var strRight = str.substr(str.length - 21, 20);
+                /* Put it together and what have you got - bipideebopideeboo */
+                return strLeft + '...' + strRight;
+            } else {
+                return str;
+            }
+        }
+
         function formatMessage(data) {
             var properties = [];
             Object.keys(data).forEach(key => {
-               properties.push(`${chalk.gray(key + ':')} ${data[key]}`);
+               properties.push(`${chalk.gray(key + ':')} ${shortenString(data[key])}`);
             });
             return properties.join(` `);
         }
