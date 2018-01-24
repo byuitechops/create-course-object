@@ -74,30 +74,38 @@ module.exports = class Course {
 
     /* Used to throw errors */
     error(err) {
-        this.log('error', {error: err});
+        this.log('error', {
+            error: err
+        });
     }
 
     /* Used to throw warnings */
     warning(message) {
         // if (typeof message == 'string')
-        this.log('warning', {message: message});
+        this.log('warning', {
+            message: message
+        });
     }
 
     /* Used to throw fatal errors */
     fatalError(err) {
         console.log(err);
-        this.log('fatalError', {error: err});
+        this.log('fatalError', {
+            error: err
+        });
     }
 
     /* Takes a string - used for logging one-time actions or displaying things to the console */
     message(message) {
-        this.log('message', {message: message});
+        this.log('message', {
+            message: message
+        });
     }
 
     console(logObj) {
 
         function shortenString(str) {
-            if (str.length > 35) {
+            if (str.length > 90) {
                 /* Get left 20 */
                 var strLeft = str.substr(0, 20);
                 /* Get right 20 */
@@ -112,7 +120,7 @@ module.exports = class Course {
         function formatMessage(data) {
             var properties = [];
             Object.keys(data).forEach(key => {
-               properties.push(`${chalk.gray(key + ':')} ${shortenString(data[key])}`);
+                properties.push(`${chalk.gray(key + ':')} ${shortenString(data[key])}`);
             });
             return properties.join(` `);
         }
@@ -133,6 +141,15 @@ module.exports = class Course {
             color2 = chalk.yellowBright;
         }
 
+        if (logObj.title == 'error') {
+            console.log(
+                fws(chalk.cyan(logObj.location), 15),
+                color1(`${fws(logObj.title, 15, { align: 'left' })}`),
+                color2(formatMessage(logObj.data.error))
+            );
+            return;
+        }
+
         console.log(
             fws(chalk.cyan(logObj.location), 15),
             color1(`${fws(logObj.title, 15, { align: 'left' })}`),
@@ -142,7 +159,9 @@ module.exports = class Course {
 
     /* THESE WILL BE REMOVED - just for development */
     success(module, message) {
-        this.log(module, { message: '% ' + message,});
+        this.log(module, {
+            message: '% ' + message,
+        });
     }
 
     throwWarning(module, message) {
