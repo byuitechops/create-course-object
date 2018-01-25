@@ -32,6 +32,8 @@ module.exports = class Course {
         };
         this.logs = [];
         this.content = [];
+
+        this.error(new Error('Test error! Ignore!'));
     }
 
     /* Stack Overflow credit: https://stackoverflow.com/questions/16697791/nodejs-get-filename-of-caller-function/29581862#29581862 */
@@ -74,6 +76,7 @@ module.exports = class Course {
 
     /* Used to throw errors */
     error(err) {
+        console.log(err);
         this.log('error', {
             error: err
         });
@@ -89,7 +92,6 @@ module.exports = class Course {
 
     /* Used to throw fatal errors */
     fatalError(err) {
-        console.log(err);
         this.log('fatalError', {
             error: err
         });
@@ -142,11 +144,12 @@ module.exports = class Course {
         }
 
         if (logObj.title == 'error') {
-            console.log(
-                fws(chalk.cyan(logObj.location), 15),
-                color1(`${fws(logObj.title, 15, { align: 'left' })}`),
-                color2(formatMessage(logObj.data.error))
-            );
+            // console.log(logObj);
+            // console.log(
+            //     fws(chalk.cyan(logObj.location), 15),
+            //     color1(`${fws(logObj.title, 15, { align: 'left' })}`),
+            //     color2(formatMessage(logObj.data))
+            // );
             return;
         }
 
