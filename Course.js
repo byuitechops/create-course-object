@@ -32,8 +32,6 @@ module.exports = class Course {
         };
         this.logs = [];
         this.content = [];
-
-        this.error(new Error('Test error! Ignore!'));
     }
 
     /* Stack Overflow credit: https://stackoverflow.com/questions/16697791/nodejs-get-filename-of-caller-function/29581862#29581862 */
