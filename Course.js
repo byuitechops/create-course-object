@@ -107,7 +107,7 @@ module.exports = class Course {
     console(logObj) {
 
         function shortenString(str) {
-            if (str.length > 90) {
+            if (str.length > 130) {
                 /* Get left 20 */
                 var strLeft = str.substr(0, 20);
                 /* Get right 20 */
