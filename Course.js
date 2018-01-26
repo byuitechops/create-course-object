@@ -23,8 +23,8 @@ module.exports = class Course {
             'uploadZipPath': path.resolve('factory', 'uploadZip'),
             'fileName': courseData.courseInfo.path.split(path.sep)[courseData.courseInfo.path.split(path.sep).length - 1],
             'linkCounter': 0,
-            'childModules': courseData.courseInfo.childModules,
-            'lessonFolders': courseData.courseInfo.lessonFolders ? courseData.courseInfo.lessonFolders : false,
+            'childModules': courseData.settings.childModules,
+            'lessonFolders': courseData.settings.lessonFolders ? courseData.courseInfo.lessonFolders : false,
             get counter() {
                 this.linkCounter = this.linkCounter++;
                 return this.linkCounter;
@@ -167,6 +167,17 @@ module.exports = class Course {
         );
     }
 
+    /* Adds new "junk drawer" item to info */
+    newInfo(propertyName, value) {
+        this.info[propertyName] = value;
+    }
+
+    /* Retrieves the current count on linkCounter */
+    getCount() {
+        this.info.linkCounter += 1;
+        return this.info.linkCounter;
+    }
+
     /* THESE WILL BE REMOVED - just for development */
     success(module, message) {
         this.log(module, {
@@ -189,17 +200,6 @@ module.exports = class Course {
     addModuleReport(title) {
         // do nothing
         console.log(title, '- attempted to create module report');
-    }
-
-    /* Adds new "junk drawer" item to info */
-    newInfo(propertyName, value) {
-        this.info[propertyName] = value;
-    }
-
-    /* Retrieves the current count on linkCounter */
-    getCount() {
-        this.info.linkCounter += 1;
-        return this.info.linkCounter;
     }
 
 };
