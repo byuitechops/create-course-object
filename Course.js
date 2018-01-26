@@ -17,10 +17,10 @@ module.exports = class Course {
         };
         this.info = {
             'D2LOU': courseData.courseInfo.D2LOU,
-            'originalFilepath': path.resolve('D2LOriginal', courseData.courseInfo.path),
-            'unzippedFilepath': path.resolve('D2LProcessing'),
-            'altUnzippedFilepath': path.resolve('D2LProcessed'),
-            'zippedFilepath': path.resolve('D2LReady'),
+            'originalZipPath': path.resolve('factory', 'originalZip', courseData.courseInfo.path),
+            'unzippedPath': path.resolve('factory', 'unzipped'),
+            'processedPath': path.resolve('factory', 'processed'),
+            'uploadZipPath': path.resolve('factory', 'uploadZip'),
             'fileName': courseData.courseInfo.path.split(path.sep)[courseData.courseInfo.path.split(path.sep).length - 1],
             'linkCounter': 0,
             'childModules': courseData.courseInfo.childModules,
@@ -36,19 +36,21 @@ module.exports = class Course {
 
     /* Stack Overflow credit: https://stackoverflow.com/questions/16697791/nodejs-get-filename-of-caller-function/29581862#29581862 */
     getCallingModule() {
-
-        var callingModule;
+        var callingModule, filePaths, x, callingPath, err, currentFile;
         try {
-            var err = new Error();
-            var currentFile;
+            err = new Error();
+            currentFile;
             Error.prepareStackTrace = function (err, stack) {
                 return stack;
             };
-            var filePaths = err.stack.map(item => item.getFileName());
+
+            filePaths = err.stack.map(item => item.getFileName());
+
             currentFile = path.basename(filePaths[0]);
-            for (var x = 0; x < filePaths.length; x++) {
+
+            for (x = 0; x < filePaths.length; x++) {
                 if (path.basename(filePaths[x]) != currentFile) {
-                    var callingPath = path.dirname(filePaths[x]).split(path.sep);
+                    callingPath = path.dirname(filePaths[x]).split(path.sep);
                     callingModule = callingPath[callingPath.length - 1];
                     break;
                 }
@@ -59,15 +61,19 @@ module.exports = class Course {
 
     /* Used to log items */
     log(title, obj) {
+        var logObj;
+
         if (obj == undefined || typeof title != 'string') {
             console.log(this.getCallingModule(), 'Incorrect inputs into course.log: ', title);
             return;
         }
-        var logObj = {
+
+        logObj = {
             title: title,
             location: this.getCallingModule(),
             data: obj
-        }
+        };
+
         this.logs.push(logObj);
         this.console(logObj);
     }
@@ -103,13 +109,16 @@ module.exports = class Course {
     }
 
     console(logObj) {
+        var color1, color2;
 
         function shortenString(str) {
+            var strLeft, strRight;
+
             if (str.length > 130) {
                 /* Get left 20 */
-                var strLeft = str.substr(0, 20);
+                strLeft = str.substr(0, 20);
                 /* Get right 20 */
-                var strRight = str.substr(str.length - 21, 20);
+                strRight = str.substr(str.length - 21, 20);
                 /* Put it together and what have you got - bipideebopideeboo */
                 return strLeft + '...' + strRight;
             } else {
@@ -122,12 +131,12 @@ module.exports = class Course {
             Object.keys(data).forEach(key => {
                 properties.push(`${chalk.gray(key + ':')} ${shortenString(data[key])}`);
             });
-            return properties.join(` `);
+            return properties.join(' ');
         }
 
 
-        var color1 = chalk.blueBright;
-        var color2 = chalk.whiteBright;
+        color1 = chalk.blueBright;
+        color2 = chalk.whiteBright;
         if (logObj.title == 'error') {
             color1 = chalk.red;
             color2 = chalk.redBright;
