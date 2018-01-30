@@ -129,7 +129,8 @@ module.exports = class Course {
         function formatMessage(data) {
             var properties = [];
             Object.keys(data).forEach(key => {
-                properties.push(`${chalk.gray(key + ':')} ${shortenString(data[key])}`);
+                // properties.push(`${chalk.gray(key + ':')} ${shortenString(data[key])}`);
+                properties.push(`${chalk.gray(key + ':')} ${data[key]}`);
             });
             return properties.join(' ');
         }
@@ -157,7 +158,7 @@ module.exports = class Course {
             //     color1(`${fws(logObj.title, 15, { align: 'left' })}`),
             //     color2(formatMessage(logObj.data))
             // );
-            return;
+            // return;
         }
 
         console.log(
