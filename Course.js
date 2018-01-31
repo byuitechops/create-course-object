@@ -36,7 +36,8 @@ module.exports = class Course {
 
     /* Stack Overflow credit: https://stackoverflow.com/questions/16697791/nodejs-get-filename-of-caller-function/29581862#29581862 */
     getCallingModule() {
-        var callingModule, filePaths, x, callingPath, err, currentFile;
+        var callingModule, filePaths, x, callingPath, err, currentFile,
+            originalPrepareStackTrace = Error.prepareStackTrace; /* So we don't lose the prepareStackTrace */
         try {
             err = new Error();
             currentFile;
@@ -55,6 +56,8 @@ module.exports = class Course {
                     break;
                 }
             }
+            /* reset prepareStackTrace */
+            Error.prepareStackTrace = originalPrepareStackTrace;
         } catch (e) {}
         return callingModule;
     }
@@ -80,9 +83,9 @@ module.exports = class Course {
 
     /* Used to throw errors */
     error(err) {
-        console.log(err);
         this.log('error', {
-            error: err
+            message: err.message,
+            stack: err.stack
         });
     }
 
@@ -97,7 +100,8 @@ module.exports = class Course {
     /* Used to throw fatal errors */
     fatalError(err) {
         this.log('fatalError', {
-            error: err
+            message: err.message,
+            stack: err.stack
         });
     }
 
@@ -152,13 +156,12 @@ module.exports = class Course {
         }
 
         if (logObj.title == 'error') {
-            // console.log(logObj);
-            // console.log(
-            //     fws(chalk.cyan(logObj.location), 15),
-            //     color1(`${fws(logObj.title, 15, { align: 'left' })}`),
-            //     color2(formatMessage(logObj.data))
-            // );
-            // return;
+            console.log(
+                fws(chalk.cyan(logObj.location), 15),
+                color1(`${fws(logObj.title, 15, { align: 'left' })}`),
+                color2(formatMessage(logObj.data))
+            );
+            return;
         }
 
         console.log(
