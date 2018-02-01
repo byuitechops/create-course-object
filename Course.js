@@ -1,10 +1,10 @@
 /*eslint-env node, es6*/
 /*eslint no-console:1*/
-/*global courseObj*/
 
 const path = require('path');
 const chalk = require('chalk');
 const fws = require('fixed-width-string');
+const moment = require('moment');
 
 module.exports = class Course {
     constructor(courseData) {
@@ -58,7 +58,9 @@ module.exports = class Course {
             }
             /* reset prepareStackTrace */
             Error.prepareStackTrace = originalPrepareStackTrace;
-        } catch (e) {}
+        } catch (e) {
+            console.log('Call Location Error:', e);
+        }
         return callingModule;
     }
 
@@ -74,6 +76,7 @@ module.exports = class Course {
         logObj = {
             title: title,
             location: this.getCallingModule(),
+            timestamp: moment().format(),
             data: obj
         };
 
@@ -115,25 +118,9 @@ module.exports = class Course {
     console(logObj) {
         var color1, color2;
 
-        function shortenString(str) {
-            var strLeft, strRight;
-
-            if (str.length > 130) {
-                /* Get left 20 */
-                strLeft = str.substr(0, 20);
-                /* Get right 20 */
-                strRight = str.substr(str.length - 21, 20);
-                /* Put it together and what have you got - bipideebopideeboo */
-                return strLeft + '...' + strRight;
-            } else {
-                return str;
-            }
-        }
-
         function formatMessage(data) {
             var properties = [];
             Object.keys(data).forEach(key => {
-                // properties.push(`${chalk.gray(key + ':')} ${shortenString(data[key])}`);
                 properties.push(`${chalk.gray(key + ':')} ${data[key]}`);
             });
             return properties.join(' ');
