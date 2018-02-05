@@ -16,6 +16,7 @@ module.exports = class Course {
             'deleteCourse': courseData.settings.deleteCourse
         };
         this.info = {
+            'domain': courseData.courseInfo.domain,
             'D2LOU': courseData.courseInfo.D2LOU,
             'originalZipPath': path.resolve('factory', 'originalZip', courseData.courseInfo.path),
             'unzippedPath': path.resolve('factory', 'unzipped'),
