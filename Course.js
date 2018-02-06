@@ -34,6 +34,14 @@ module.exports = class Course {
         };
         this.logs = [];
         this.content = [];
+
+        if ((/\d{3}\w?/i).test(this.info.fileName)) {
+            this.info.courseName = this.info.fileName.split(/\d{3}\w?/i)[0].trim();
+            this.info.courseCode = `${this.info.fileName.split(/\d{3}\w?/i)[0].trim()} ${this.info.fileName.match(/\d{3}\w?/i)[0]}`;
+        } else {
+            this.info.courseName = this.info.fileName.split('.zip')[0];
+            this.info.courseCode =  this.info.fileName.split('.zip')[0];
+        }
     }
 
     /* Stack Overflow credit: https://stackoverflow.com/questions/16697791/nodejs-get-filename-of-caller-function/29581862#29581862 */
