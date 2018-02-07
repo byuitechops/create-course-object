@@ -13,7 +13,8 @@ module.exports = class Course {
             'readAll': courseData.settings.readAll,
             'online': courseData.settings.online,
             'keepFiles': courseData.settings.keepFiles,
-            'deleteCourse': courseData.settings.deleteCourse
+            'deleteCourse': courseData.settings.deleteCourse,
+            'lessonFolders': courseData.settings.lessonFolders ? courseData.settings.lessonFolders : false,
         };
         this.info = {
             'domain': courseData.courseInfo.domain,
@@ -25,7 +26,6 @@ module.exports = class Course {
             'fileName': courseData.courseInfo.path.split(path.sep)[courseData.courseInfo.path.split(path.sep).length - 1],
             'linkCounter': 0,
             'childModules': courseData.settings.childModules,
-            'lessonFolders': courseData.settings.lessonFolders ? courseData.settings.lessonFolders : false,
             'canvasOU': courseData.courseInfo.canvasOU,
             get counter() {
                 this.linkCounter = this.linkCounter++;
