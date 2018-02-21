@@ -8,25 +8,18 @@ const moment = require('moment');
 
 module.exports = class Course {
     constructor(courseData) {
-        this.settings = {
-            'debug': courseData.settings.debug,
-            'readAll': courseData.settings.readAll,
-            'online': courseData.settings.online,
-            'keepFiles': courseData.settings.keepFiles,
-            'deleteCourse': courseData.settings.deleteCourse,
-            'lessonFolders': courseData.settings.lessonFolders ? courseData.settings.lessonFolders : false,
-        };
+        this.settings = courseData.settings;
         this.info = {
-            'domain': courseData.courseInfo.domain,
-            'D2LOU': courseData.courseInfo.D2LOU,
+            // 'domain': courseData.courseInfo.domain,
+            // 'D2LOU': courseData.courseInfo.D2LOU,
             'originalZipPath': path.resolve('factory', 'originalZip', courseData.courseInfo.path),
             'unzippedPath': path.resolve('factory', 'unzipped'),
             'processedPath': path.resolve('factory', 'processed'),
             'uploadZipPath': path.resolve('factory', 'uploadZip'),
             'fileName': courseData.courseInfo.path.split(path.sep)[courseData.courseInfo.path.split(path.sep).length - 1],
             'linkCounter': 0,
-            'childModules': courseData.settings.childModules,
-            'canvasOU': courseData.courseInfo.canvasOU,
+            // 'childModules': courseData.settings.childModules,
+            // 'canvasOU': courseData.courseInfo.canvasOU,
             get counter() {
                 this.linkCounter = this.linkCounter++;
                 return this.linkCounter;
@@ -40,7 +33,7 @@ module.exports = class Course {
             this.info.courseCode = `${this.info.fileName.split(/\d{3}\w?/i)[0].trim()} ${this.info.fileName.match(/\d{3}\w?/i)[0]}`;
         } else {
             this.info.courseName = this.info.fileName.split('.zip')[0];
-            this.info.courseCode =  this.info.fileName.split('.zip')[0];
+            this.info.courseCode = this.info.fileName.split('.zip')[0];
         }
     }
 
@@ -155,7 +148,7 @@ module.exports = class Course {
         if (logObj.title == 'error') {
             console.log(
                 fws(chalk.cyan(logObj.location), 15),
-                color1(`${fws(logObj.title, 15, { align: 'left' })}`),
+                color1(`${fws(logObj.title, 25, { align: 'left' })}`),
                 color2(formatMessage(logObj.data))
             );
             return;
