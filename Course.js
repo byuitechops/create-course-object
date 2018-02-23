@@ -10,7 +10,7 @@ module.exports = class Course {
     constructor(courseData) {
         this.settings = courseData.settings;
         this.info = {
-            // 'domain': courseData.courseInfo.domain,
+            'domain': courseData.courseInfo.domain,
             // 'D2LOU': courseData.courseInfo.D2LOU,
             'originalZipPath': path.resolve('factory', 'originalZip', courseData.courseInfo.path),
             'unzippedPath': path.resolve('factory', 'unzipped'),
@@ -163,6 +163,7 @@ module.exports = class Course {
 
     /* Adds new "junk drawer" item to info */
     newInfo(propertyName, value) {
+        // check if key already exists!!
         this.info[propertyName] = value;
     }
 
