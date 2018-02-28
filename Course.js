@@ -7,19 +7,25 @@ const fws = require('fixed-width-string');
 const moment = require('moment');
 
 module.exports = class Course {
-    constructor(courseData) {
-        this.settings = courseData.settings;
+    constructor(data) {
+        this.settings = {
+            'domain': data.domain,
+            'platform': data.platform,
+            'deleteCourse': data.cleanUpModules.includes('delete-course'),
+            'removeFiles': !data.cleanUpModules.includes('remove-files'),
+            'lessonFolders': data.lessonFolders
+        };
         this.info = {
-            'domain': courseData.courseInfo.domain,
-            // 'D2LOU': courseData.courseInfo.D2LOU,
-            'originalZipPath': path.resolve('factory', 'originalZip', courseData.courseInfo.path),
+            'domain': data.domain,
+            'D2LOU': data.D2LOU,
+            'originalZipPath': path.resolve('factory', 'originalZip', data.name),
             'unzippedPath': path.resolve('factory', 'unzipped'),
             'processedPath': path.resolve('factory', 'processed'),
             'uploadZipPath': path.resolve('factory', 'uploadZip'),
-            'fileName': courseData.courseInfo.path.split(path.sep)[courseData.courseInfo.path.split(path.sep).length - 1],
+            'fileName': data.name.split(path.sep)[data.name.split(path.sep).length - 1],
+            'childModules': [...data.preImportModules, ...data.postImportModules],
+            'canvasOU': data.canvasOU,
             'linkCounter': 0,
-            // 'childModules': courseData.settings.childModules,
-            // 'canvasOU': courseData.courseInfo.canvasOU,
             get counter() {
                 this.linkCounter = this.linkCounter++;
                 return this.linkCounter;
@@ -172,29 +178,4 @@ module.exports = class Course {
         this.info.linkCounter += 1;
         return this.info.linkCounter;
     }
-
-    /* THESE WILL BE REMOVED - just for development */
-    success(module, message) {
-        this.log(module, {
-            message: '% ' + message,
-        });
-    }
-
-    throwWarning(module, message) {
-        this.warning('% ' + message);
-    }
-
-    throwErr(module, err) {
-        this.error('% ' + err);
-    }
-
-    throwFatalErr(module, err) {
-        this.fatalError('% ' + err);
-    }
-
-    addModuleReport(title) {
-        // do nothing
-        console.log(title, '- attempted to create module report');
-    }
-
 };
