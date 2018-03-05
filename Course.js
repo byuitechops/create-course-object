@@ -11,6 +11,7 @@ module.exports = class Course {
         this.settings = {
             'domain': data.domain,
             'platform': data.platform,
+            'accountID': '19',
             'deleteCourse': data.cleanUpModules.includes('delete-course'),
             'removeFiles': !data.cleanUpModules.includes('remove-files'),
             'lessonFolders': data.lessonFolders
