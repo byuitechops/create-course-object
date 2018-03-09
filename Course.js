@@ -171,8 +171,11 @@ module.exports = class Course {
 
     /* Adds new "junk drawer" item to info */
     newInfo(propertyName, value) {
-        // check if key already exists!!
-        this.info[propertyName] = value;
+        if (this.info[propertyName]) {
+            console.log(`This item already exists on the course.info object. Cannot add: ${propertyName}`);
+        } else {
+            this.info[propertyName] = value;
+        }
     }
 
     /* Retrieves the current count on linkCounter */
