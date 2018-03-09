@@ -17,6 +17,7 @@ module.exports = class Course {
             'lessonFolders': data.lessonFolders
         };
         this.info = {
+            'username': data.username,
             'domain': data.domain,
             'D2LOU': data.D2LOU,
             'originalZipPath': path.resolve('factory', 'originalZip', data.name),
@@ -163,7 +164,7 @@ module.exports = class Course {
 
         console.log(
             fws(chalk.cyan(logObj.location), 15),
-            color1(`${fws(logObj.title, 15, { align: 'left' })}`),
+            color1(`${fws(logObj.title, 20, { align: 'left' })}`),
             color2(formatMessage(logObj.data))
         );
     }
