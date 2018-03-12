@@ -19,14 +19,14 @@ module.exports = class Course {
         this.info = {
             'username': data.username || 'Unspecified',
             'domain': data.domain || 'byui',
-            'D2LOU': data.D2LOU || 'Unspecified',
+            'D2LOU': data.D2LOU || '',
             'originalZipPath': path.resolve('factory', 'originalZip', data.name) || 'Unspecified',
             'unzippedPath': path.resolve('factory', 'unzipped') || 'Unspecified',
             'processedPath': path.resolve('factory', 'processed') || 'Unspecified',
             'uploadZipPath': path.resolve('factory', 'uploadZip') || 'Unspecified',
             'fileName': data.name.split(path.sep)[data.name.split(path.sep).length - 1] || 'Unspecified',
             'childModules': (data.preImportModules && data.postImportModules) ? [...data.preImportModules, ...data.postImportModules] : [],
-            'canvasOU': data.canvasOU || 'Unspecified',
+            'canvasOU': data.canvasOU || '',
             'standardsCheck': false,
             'linkCounter': 0,
             'canvasFolders': {
