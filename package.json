@@ -27,5 +27,6 @@
   },
   "devDependencies": {
     "tap-prettify": "0.0.2"
-  }
+  },
+  "childType": "shell"
 }
