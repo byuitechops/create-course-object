@@ -84,6 +84,6 @@ module.exports = class Course {
         logger.htmlReport(location, title);
     }
     setReportHeader(html) {
-        logger.setHeader(html);
+        logger.setHtmlHeader(html);
     }
 };
