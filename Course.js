@@ -48,6 +48,7 @@ module.exports = class Course {
         this.message = logger.message;
         this.getCallingModule = logger.getCallingModule;
         this.console = logger.console;
+        this.logger = logger;
 
         if ((/\d{3}\w?/i).test(this.info.fileName)) {
             this.info.courseName = this.info.fileName.split(/\d{3}\w?/i)[0].trim();
