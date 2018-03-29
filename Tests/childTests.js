@@ -1,26 +1,16 @@
 /* Dependencies */
 const tap = require('tap');
-const createCourseObj = require('../createCourseObj.js');
+const canvas = require('canvas-wrapper');
 
-function g1Tests() {
-    // Tests for Gauntlet 1
-}
+module.exports = (course, callback) => {
+    tap.test('child-template', (test) => {
 
-function g2Tests() {
-    // Tests for Gauntlet 2
-}
+        test.pass('potato');
+        test.pass('tomato');
+        test.fail('avacado');
 
-function g3Tests() {
-    // Tests for Gauntlet 3
-}
+        test.end();
+    });
 
-function g4Tests() {
-    // Tests for Gauntlet 4
-}
-
-module.exports = {
-    gauntlet1: g1Tests(),
-    gauntlet2: g2Tests(),
-    gauntlet3: g3Tests(),
-    gauntlet4: g4Tests(),
-}
+    callback(null, course);
+};
