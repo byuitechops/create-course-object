@@ -9,14 +9,14 @@ const moment = require('moment');
 module.exports = class Course {
     constructor(data) {
         this.settings = {
-            'domain': data.domain,
+            'domain': 'byui', //data.domain
             'platform': data.platform,
             'deleteCourse': data.cleanUpModules.includes('delete-course'),
             'removeFiles': !data.cleanUpModules.includes('remove-files'),
             'lessonFolders': data.lessonFolders
         };
         this.info = {
-            'domain': data.domain,
+            'domain': 'byui', //data.domain
             'D2LOU': data.D2LOU,
             'originalZipPath': path.resolve('factory', 'originalZip', data.name),
             'unzippedPath': path.resolve('factory', 'unzipped'),
