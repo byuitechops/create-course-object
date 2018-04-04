@@ -8,7 +8,7 @@ const logger = new Logger();
 module.exports = class Course {
     constructor(data) {
         this.settings = {
-            'domain': data.domain || 'byui',
+            'domain': 'byui',
             'platform': data.platform || 'online',
             'accountID': '19',
             'deleteCourse': data.cleanUpModules ? data.cleanUpModules.includes('delete-course') : false,
@@ -17,7 +17,7 @@ module.exports = class Course {
         };
         this.info = {
             'username': data.username || 'Unspecified',
-            'domain': data.domain || 'byui',
+            'domain': 'byui',
             'D2LOU': data.D2LOU || '',
             'originalZipPath': path.resolve('factory', 'originalZip', data.name) || 'Unspecified',
             'unzippedPath': path.resolve('factory', 'unzipped') || 'Unspecified',
