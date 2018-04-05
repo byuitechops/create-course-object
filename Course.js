@@ -3,7 +3,7 @@
 
 const path = require('path');
 const Logger = require('logger');
-const logger = new Logger();
+const logger = new Logger('Conversion Report');
 
 module.exports = class Course {
     constructor(data) {
