@@ -13,7 +13,8 @@ module.exports = class Course {
             'accountID': '19',
             'deleteCourse': data.cleanUpModules ? data.cleanUpModules.includes('delete-course') : false,
             'removeFiles': data.cleanUpModules ? !data.cleanUpModules.includes('remove-files') : true,
-            'lessonFolders': data.lessonFolders || 'Unspecified'
+            'lessonFolders': data.lessonFolders || 'Unspecified',
+            'moduleSubHeaders': data.moduleSubHeaders || false
         };
         this.info = {
             'username': data.username || 'Unspecified',
