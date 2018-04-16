@@ -14,6 +14,7 @@ module.exports = class Course {
             'deleteCourse': data.cleanUpModules ? data.cleanUpModules.includes('delete-course') : false,
             'removeFiles': data.cleanUpModules ? !data.cleanUpModules.includes('remove-files') : true,
             'lessonFolders': data.lessonFolders || 'Unspecified',
+            'reorganizeFiles': false,
         };
         this.info = {
             'username': data.username || 'Unspecified',
