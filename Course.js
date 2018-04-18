@@ -3,20 +3,29 @@
 
 const path = require('path');
 const Logger = require('logger');
-const logger = new Logger('Conversion Report');
 
 module.exports = class Course {
     constructor(data) {
+
         this.settings = {
             'domain': 'byui',
             'platform': data.platform || 'online',
             'accountID': '19',
             'deleteCourse': data.cleanUpModules ? data.cleanUpModules.includes('delete-course') : false,
             'removeFiles': data.cleanUpModules ? !data.cleanUpModules.includes('remove-files') : true,
-            'lessonFolders': data.lessonFolders || false,
             'reorganizeFiles': false,
-            'block': data.blockCourse || false,
+            'lessonFolders': false,
+            'blockCourse': /block/i.test(data.name),
+            'disableLogOutput': false,
         };
+
+        /* Take the options and add them to settings */
+        if (data.options) {
+            data.options.forEach(option => {
+                this.settings[option] = true;
+            });
+        }
+
         this.info = {
             'username': data.username || 'Unspecified',
             'domain': 'byui',
@@ -41,16 +50,18 @@ module.exports = class Course {
                 return this.linkCounter;
             }
         };
-        this.logs = logger.logs;
+
+        /* Set up the logger */
+        this.logger = new Logger('Conversion Report');
+        this.logs = this.logger.logs;
         this.content = [];
-        this.log = logger.log;
-        this.warning = logger.warning;
-        this.error = logger.error;
-        this.fatalError = logger.fatalError;
-        this.message = logger.message;
-        this.getCallingModule = logger.getCallingModule;
-        this.console = logger.console;
-        this.logger = logger;
+        this.log = this.logger.log;
+        this.warning = this.logger.warning;
+        this.error = this.logger.error;
+        this.fatalError = this.logger.fatalError;
+        this.message = this.logger.message;
+        this.getCallingModule = this.logger.getCallingModule;
+        this.console = this.logger.console;
 
         if ((/\d{3}\w?/i).test(this.info.fileName)) {
             this.info.courseName = this.info.fileName.split(/\d{3}\w?/i)[0].trim();
@@ -58,6 +69,12 @@ module.exports = class Course {
         } else {
             this.info.courseName = this.info.fileName.split('.zip')[0];
             this.info.courseCode = this.info.fileName.split('.zip')[0];
+        }
+
+        /* Disable output if set */
+        if (this.settings.disableLogOutput === true) {
+            this.logger.disableOutput(true);
+            console.log('LOGGER OUTPUT DISABLED');
         }
     }
 
@@ -78,15 +95,15 @@ module.exports = class Course {
     }
 
     consoleReport() {
-        logger.consoleReport();
+        this.logger.consoleReport();
     }
     jsonReport(path) {
-        logger.jsonReport(path);
+        this.logger.jsonReport(path);
     }
     htmlReport(location, title) {
-        logger.htmlReport(location, title);
+        this.logger.htmlReport(location, title);
     }
     setReportHeader(html) {
-        logger.setHtmlHeader(html);
+        this.logger.setHtmlHeader(html);
     }
 };
