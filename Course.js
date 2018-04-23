@@ -27,7 +27,7 @@ module.exports = class Course {
         }
 
         this.info = {
-            'username': data.username || 'Unspecified',
+            'username': data.username || data.author || 'Unspecified',
             'domain': 'byui',
             'D2LOU': data.D2LOU || '',
             'originalZipPath': path.resolve('factory', 'originalZip', data.name) || 'Unspecified',
