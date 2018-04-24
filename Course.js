@@ -50,7 +50,7 @@ module.exports = class Course {
                 return this.linkCounter;
             }
         };
-        console.log(this.info);
+
         /* Set up the logger */
         this.logger = new Logger('Conversion Report');
         this.logs = this.logger.logs;
