@@ -16,6 +16,7 @@ module.exports = class Course {
             'reorganizeFiles': false,
             'lessonFolders': false,
             'blockCourse': /block/i.test(data.name),
+            'targetAttributes': false,
             'disableLogOutput': false,
         };
 
