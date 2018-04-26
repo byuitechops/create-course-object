@@ -17,16 +17,10 @@
   },
   "homepage": "https://github.com/byuitechops/create-course-object#readme",
   "dependencies": {
-    "ansi-html": "0.0.7",
-    "chalk": "^2.3.0",
-    "fixed-width-string": "^1.0.0",
+    "canvas-wrapper": "github:byuitechops/canvas-wrapper",
     "logger": "github:byuitechops/logger",
-    "moment": "^2.20.1",
-    "path": "^0.12.7",
     "tap": "^10.7.3"
   },
-  "devDependencies": {
-    "tap-prettify": "0.0.2"
-  },
+  "devDependencies": {},
   "childType": "shell"
 }
