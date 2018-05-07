@@ -78,6 +78,9 @@ module.exports = class Course {
             this.logger.disableOutput(true);
             console.log('LOGGER OUTPUT DISABLED');
         }
+
+        /* Removes new lines in the logs */
+        this.logger.removeNewLines(true);
     }
 
     /* Adds new "junk drawer" item to info */
