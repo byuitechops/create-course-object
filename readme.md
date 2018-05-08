@@ -18,11 +18,23 @@ npm install create-course-object
 ## Run Requirements
 This module requires an courseData object, which must contain a settings object and a courseInfo object.
 
-`Course.settings` is an exact copy of the `CourseData.settings` object.
+This module uses a courseData object to populate the course object. The courseData doesn't have any required fields. Optional fields are listed below with their default values and location on the Course object:
 
-CourseInfo must contain the following properties: 
-* `path`
-* `domain`
+| Name          | Type      | Course Location | Description | Default |
+| ------------- |-----------| ----------------|-------------|---------|
+| author        | String    | `Course.info.username`| Used to name test gauntlets | `'Unspecified'` |
+| canvasOU      | String    | `Course.info`   | Unique ID of the Canvas Course to use | `''` |
+| cleanUpModules | Array    | `Course.settings`| Used to determine which CleanUp modules to run |  |
+| cookies       | Array     | `Course.settings`| Authentication cookies for D2L | `[]` |
+| D2LOU         | String    | `Course.info`   | OU of the Brightspace course being converted | `''` |
+| name          | String    | `Course.info`   | Name of the course | `'Unspecified'` |
+| platform      | String    | `Course.settings`| Which platform the course is in | `'online'` |
+| postImportModules | Array | `Course.info`  | Used to determine which postImport modules to run |  |
+| preImportModules | Array  | `Course.info`  | Used to determine which preImport modules to run |  |
+| options       | Array     | `Course.info`  | Used to determine which options to run |  |
+| username      | String    | `Course.info`  | Used to name test gauntlets | `'Unspecified'` |
+
+
 
 ## Options
 None

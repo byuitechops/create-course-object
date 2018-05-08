@@ -32,11 +32,11 @@ module.exports = class Course {
             'username': data.username || data.author || 'Unspecified',
             'domain': 'byui',
             'D2LOU': data.D2LOU || '',
-            'originalZipPath': path.resolve('factory', 'originalZip', data.name) || 'Unspecified',
+            'originalZipPath': data.name ? path.resolve('factory', 'originalZip', data.name) : 'Unspecified',
             'unzippedPath': path.resolve('factory', 'unzipped') || 'Unspecified',
             'processedPath': path.resolve('factory', 'processed') || 'Unspecified',
             'uploadZipPath': path.resolve('factory', 'uploadZip') || 'Unspecified',
-            'fileName': data.name.split(path.sep)[data.name.split(path.sep).length - 1].replace('\\', '-').replace('/', '-') || 'Unspecified',
+            'fileName': data.name ? data.name.split(path.sep)[data.name.split(path.sep).length - 1].replace('\\', '-').replace('/', '-') : 'Unspecified',
             'childModules': data.preImportModules && data.postImportModules ? [...data.preImportModules, ...data.postImportModules] : [],
             'canvasOU': data.canvasOU || '',
             'checkStandards:': false,
@@ -52,7 +52,7 @@ module.exports = class Course {
                 return this.linkCounter;
             }
         };
-
+        
         /* Set up the logger */
         this.logger = new Logger('Conversion Report');
         this.logs = this.logger.logs;

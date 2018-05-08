@@ -3,18 +3,13 @@
 /* Put dependencies here */
 var Course = require('./Course.js');
 
-module.exports = (data, stepCallback) => {
+module.exports = (data = {}, stepCallback) => {
     /* Create the course object, give it the original filepath, and settings */
     var course;
 
     /* Check if the filePath contains .ZIP */
-    if (!(/\.zip/i).test(data.name)) {
+    if (data.name && !(/\.zip/i).test(data.name)) {
         data.name += '.zip';
-    }
-
-    if (!data.name) {
-        stepCallback(new Error('Filepath is empty'));
-        return;
     }
 
     course = new Course(data);

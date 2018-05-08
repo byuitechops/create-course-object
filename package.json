@@ -18,9 +18,10 @@
   "homepage": "https://github.com/byuitechops/create-course-object#readme",
   "dependencies": {
     "canvas-wrapper": "github:byuitechops/canvas-wrapper",
-    "logger": "github:byuitechops/logger",
+    "logger": "github:byuitechops/logger"
+  },
+  "devDependencies": {
     "tap": "^10.7.3"
   },
-  "devDependencies": {},
   "childType": "shell"
 }
