@@ -16,6 +16,7 @@ module.exports = class Course {
             'removeFiles': data.cleanUpModules ? !data.cleanUpModules.includes('remove-files') : true,
             'reorganizeFiles': false,
             'lessonFolders': false,
+            'pinDiscussionBoards': false,
             'blockCourse': /block/i.test(data.name),
             'targetAttributes': false,
             'disableLogOutput': false,
@@ -52,7 +53,7 @@ module.exports = class Course {
                 return this.linkCounter;
             }
         };
-        
+
         /* Set up the logger */
         this.logger = new Logger('Conversion Report');
         this.logs = this.logger.logs;
