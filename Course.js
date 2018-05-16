@@ -20,6 +20,7 @@ module.exports = class Course {
             'blockCourse': /block/i.test(data.name),
             'targetAttributes': false,
             'disableLogOutput': false,
+            'blueprintLockItems': false,
         };
 
         /* Take the options and add them to settings */
