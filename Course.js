@@ -3,6 +3,7 @@
 
 const path = require('path');
 const Logger = require('logger');
+var logger = new Logger('Conversion Report');
 
 module.exports = class Course {
     constructor(data) {
@@ -21,14 +22,16 @@ module.exports = class Course {
             'targetAttributes': false,
             'disableLogOutput': false,
             'blueprintLockItems': false,
+            'moveUnusedIntoArchive': false,
+            'renameFiles': false,
+            'moveFiles': false,
+            'moduleItemNamingConventions': false,
         };
 
-        /* Take the options and add them to settings */
-        if (data.options) {
-            data.options.forEach(option => {
-                this.settings[option] = true;
-            });
-        }
+        /* Identify the selected options and add them to settings */
+        data.options.forEach(option => {
+            this.settings[option.name] = option.value;
+        });
 
         this.info = {
             'username': data.username || data.author || 'Unspecified',
@@ -56,16 +59,16 @@ module.exports = class Course {
         };
 
         /* Set up the logger */
-        this.logger = new Logger('Conversion Report');
-        this.logs = this.logger.logs;
+        this.logger = logger
+        this.logs = logger.logs;
         this.content = [];
-        this.log = this.logger.log;
-        this.warning = this.logger.warning;
-        this.error = this.logger.error;
-        this.fatalError = this.logger.fatalError;
-        this.message = this.logger.message;
-        this.getCallingModule = this.logger.getCallingModule;
-        this.console = this.logger.console;
+        this.log = logger.log;
+        this.warning = logger.warning;
+        this.error = logger.error;
+        this.fatalError = logger.fatalError;
+        this.message = logger.message;
+        this.getCallingModule = logger.getCallingModule;
+        this.console = logger.console;
 
         if ((/\d{3}\w?/i).test(this.info.fileName)) {
             this.info.courseName = this.info.fileName.split(/\d{3}\w?/i)[0].trim();
@@ -77,12 +80,12 @@ module.exports = class Course {
 
         /* Disable output if set */
         if (this.settings.disableLogOutput === true) {
-            this.logger.disableOutput(true);
+            logger.disableOutput(true);
             console.log('LOGGER OUTPUT DISABLED');
         }
 
         /* Removes new lines in the logs */
-        this.logger.removeNewLines(true);
+        logger.removeNewLines(true);
     }
 
     /* Adds new "junk drawer" item to info */
@@ -102,15 +105,15 @@ module.exports = class Course {
     }
 
     consoleReport() {
-        this.logger.consoleReport();
+        logger.consoleReport();
     }
     jsonReport(path) {
-        this.logger.jsonReport(path);
+        logger.jsonReport(path);
     }
     htmlReport(location, title) {
-        this.logger.htmlReport(location, title);
+        logger.htmlReport(location, title);
     }
     setReportHeader(html) {
-        this.logger.setHtmlHeader(html);
+        logger.setHtmlHeader(html);
     }
 };
