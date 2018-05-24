@@ -29,11 +29,14 @@ module.exports = class Course {
         };
 
         /* Identify the selected options and add them to settings */
-        data.options.forEach(option => {
-            this.settings[option.name] = option.value;
-        });
+        if (data.options) {
+            data.options.forEach(option => {
+                this.settings[option.name] = option.value;
+            });
+        }
 
         this.info = {
+            'data': data,
             'username': data.username || data.author || 'Unspecified',
             'domain': 'byui',
             'D2LOU': data.D2LOU || '',
