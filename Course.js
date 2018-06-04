@@ -38,6 +38,7 @@ module.exports = class Course {
         this.info = {
             'data': data,
             'username': data.username || data.author || 'Unspecified',
+            'password': data.password || null,
             'instructorName': data.instructorName || '',
             'D2LOU': data.D2LOU || '',
             'originalZipPath': data.name ? path.resolve('factory', 'originalZip', data.name) : 'Unspecified',
@@ -61,6 +62,9 @@ module.exports = class Course {
             }
         };
 
+        this.info.courseName = this.info.fileName.split('.zip')[0];
+        this.info.courseCode = this.info.fileName.split('.zip')[0];
+
         /* Set up the logger */
         this.logger = logger;
         this.logs = logger.logs;
@@ -72,9 +76,7 @@ module.exports = class Course {
         this.message = logger.message;
         this.getCallingModule = logger.getCallingModule;
         this.console = logger.console;
-
-        this.info.courseName = this.info.fileName.split('.zip')[0];
-        this.info.courseCode = this.info.fileName.split('.zip')[0];
+        
 
         /* Disable output if set */
         if (this.settings.disableLogOutput === true) {
