@@ -38,7 +38,6 @@ module.exports = class Course {
         this.info = {
             'data': data,
             'username': data.username || data.author || 'Unspecified',
-            'domain': 'byui',
             'D2LOU': data.D2LOU || '',
             'originalZipPath': data.name ? path.resolve('factory', 'originalZip', data.name) : 'Unspecified',
             'unzippedPath': path.resolve('factory', 'unzipped') || 'Unspecified',
