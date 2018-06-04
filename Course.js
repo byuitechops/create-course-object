@@ -9,7 +9,7 @@ module.exports = class Course {
     constructor(data) {
 
         this.settings = {
-            'domain': 'byui',
+            'domain': data.domain || 'byui',
             'platform': data.platform || 'online',
             'accountID': '19',
             'cookies': data.cookies || [],
@@ -63,7 +63,7 @@ module.exports = class Course {
         };
 
         /* Set up the logger */
-        this.logger = logger
+        this.logger = logger;
         this.logs = logger.logs;
         this.content = [];
         this.log = logger.log;
@@ -74,6 +74,7 @@ module.exports = class Course {
         this.getCallingModule = logger.getCallingModule;
         this.console = logger.console;
 
+<<<<<<< HEAD
         // if ((/\d{3}\w?/i).test(this.info.fileName)) {
         //     this.info.courseName = this.info.fileName.split(/\d{3}\w?/i)[0].trim();
         //     this.info.courseCode = `${this.info.fileName.split(/\d{3}\w?/i)[0].trim()} ${this.info.fileName.match(/\d{3}\w?/i)[0]}`;
@@ -81,6 +82,10 @@ module.exports = class Course {
         this.info.courseName = this.info.fileName.split('.zip')[0];
         this.info.courseCode = this.info.fileName.split('.zip')[0];
         // }
+=======
+        this.info.courseName = this.info.fileName.split('.zip')[0];
+        this.info.courseCode = this.info.fileName.split(/\w*\s?\d{3}\w?/i)[0];
+>>>>>>> f2e46531aa9f958e55f4525719708bae2d97ab1f
 
         /* Disable output if set */
         if (this.settings.disableLogOutput === true) {
