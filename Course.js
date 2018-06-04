@@ -39,6 +39,7 @@ module.exports = class Course {
             'data': data,
             'username': data.username || data.author || 'Unspecified',
             'domain': 'byui',
+            'instructorName': data.instructorName || '',
             'D2LOU': data.D2LOU || '',
             'originalZipPath': data.name ? path.resolve('factory', 'originalZip', data.name) : 'Unspecified',
             'unzippedPath': path.resolve('factory', 'unzipped') || 'Unspecified',
@@ -73,13 +74,13 @@ module.exports = class Course {
         this.getCallingModule = logger.getCallingModule;
         this.console = logger.console;
 
-        if ((/\d{3}\w?/i).test(this.info.fileName)) {
-            this.info.courseName = this.info.fileName.split(/\d{3}\w?/i)[0].trim();
-            this.info.courseCode = `${this.info.fileName.split(/\d{3}\w?/i)[0].trim()} ${this.info.fileName.match(/\d{3}\w?/i)[0]}`;
-        } else {
-            this.info.courseName = this.info.fileName.split('.zip')[0];
-            this.info.courseCode = this.info.fileName.split('.zip')[0];
-        }
+        // if ((/\d{3}\w?/i).test(this.info.fileName)) {
+        //     this.info.courseName = this.info.fileName.split(/\d{3}\w?/i)[0].trim();
+        //     this.info.courseCode = `${this.info.fileName.split(/\d{3}\w?/i)[0].trim()} ${this.info.fileName.match(/\d{3}\w?/i)[0]}`;
+        // } else {
+        this.info.courseName = this.info.fileName.split('.zip')[0];
+        this.info.courseCode = this.info.fileName.split('.zip')[0];
+        // }
 
         /* Disable output if set */
         if (this.settings.disableLogOutput === true) {
