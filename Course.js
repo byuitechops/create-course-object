@@ -38,7 +38,7 @@ module.exports = class Course {
         this.info = {
             'data': data,
             'username': data.username || data.author || 'Unspecified',
-            'domain': 'byui',
+            'password': data.password || null,
             'instructorName': data.instructorName || '',
             'instructorEmail': data.instructorEmail || '',
             'D2LOU': data.D2LOU || '',
@@ -62,6 +62,9 @@ module.exports = class Course {
                 return this.linkCounter;
             }
         };
+
+        this.info.courseName = this.info.fileName.split('.zip')[0];
+        this.info.courseCode = this.info.fileName.split('.zip')[0];
 
         /* Set up the logger */
         this.logger = logger;
