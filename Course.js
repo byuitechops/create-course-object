@@ -40,6 +40,7 @@ module.exports = class Course {
             'username': data.username || data.author || 'Unspecified',
             'domain': 'byui',
             'instructorName': data.instructorName || '',
+            'instructorEmail': data.instructorEmail || '',
             'D2LOU': data.D2LOU || '',
             'originalZipPath': data.name ? path.resolve('factory', 'originalZip', data.name) : 'Unspecified',
             'unzippedPath': path.resolve('factory', 'unzipped') || 'Unspecified',
@@ -74,18 +75,8 @@ module.exports = class Course {
         this.getCallingModule = logger.getCallingModule;
         this.console = logger.console;
 
-<<<<<<< HEAD
-        // if ((/\d{3}\w?/i).test(this.info.fileName)) {
-        //     this.info.courseName = this.info.fileName.split(/\d{3}\w?/i)[0].trim();
-        //     this.info.courseCode = `${this.info.fileName.split(/\d{3}\w?/i)[0].trim()} ${this.info.fileName.match(/\d{3}\w?/i)[0]}`;
-        // } else {
-        this.info.courseName = this.info.fileName.split('.zip')[0];
-        this.info.courseCode = this.info.fileName.split('.zip')[0];
-        // }
-=======
         this.info.courseName = this.info.fileName.split('.zip')[0];
         this.info.courseCode = this.info.fileName.split(/\w*\s?\d{3}\w?/i)[0];
->>>>>>> f2e46531aa9f958e55f4525719708bae2d97ab1f
 
         /* Disable output if set */
         if (this.settings.disableLogOutput === true) {
