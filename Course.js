@@ -80,9 +80,6 @@ module.exports = class Course {
         this.getCallingModule = logger.getCallingModule;
         this.console = logger.console;
 
-        this.info.courseName = this.info.fileName.split('.zip')[0];
-        this.info.courseCode = this.info.fileName.split(/\w*\s?\d{3}\w?/i)[0];
-
         /* Disable output if set */
         if (this.settings.disableLogOutput === true) {
             logger.disableOutput(true);
