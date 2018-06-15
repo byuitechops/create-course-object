@@ -64,7 +64,9 @@ module.exports = class Course {
         };
 
         this.info.courseName = this.info.fileName.split('.zip')[0];
-        this.info.courseCode = this.info.fileName.split('.zip')[0];
+        this.info.courseCode = (this.info.fileName.split(' ')[0] + ' ' + this.info.fileName.split(' ')[1]).replace(':', '');
+        console.log('COURSE NAME:', this.info.courseName);
+        console.log('COURSE CODE:', this.info.courseCode);
 
         /* Set up the logger */
         this.logger = logger;
