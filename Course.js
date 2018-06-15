@@ -7,7 +7,6 @@ var logger = new Logger('Conversion Report');
 
 module.exports = class Course {
     constructor(data) {
-
         this.settings = {
             'domain': data.domain || 'byui',
             'platform': data.platform || 'online',
