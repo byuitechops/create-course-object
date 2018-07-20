@@ -62,6 +62,10 @@ module.exports = class Course {
             }
         };
 
+        if (this.info.instructorEmail) {
+            this.info.fileName = `${this.info.fileName.replace('.zip', '')} - ${this.info.instructorEmail}.zip`;
+        }
+
         this.info.courseName = this.info.fileName.split('.zip')[0];
         this.info.courseCode = (this.info.fileName.split(' ')[0] + ' ' + this.info.fileName.split(' ')[1]).replace(':', '');
         this.info.courseCode = this.info.courseCode.replace('.zip', '');
