@@ -45,7 +45,7 @@ module.exports = class Course {
             'unzippedPath': path.resolve('factory', 'unzipped') || 'Unspecified',
             'processedPath': path.resolve('factory', 'processed') || 'Unspecified',
             'uploadZipPath': path.resolve('factory', 'uploadZip') || 'Unspecified',
-            'fileName': data.name ? data.name : 'Unspecified',
+            'fileName': data.name ? data.name.split(path.sep)[data.name.split(path.sep).length - 1].replace('\\', '-').replace('/', '-') : 'Unspecified',
             'childModules': data.preImportModules && data.postImportModules ? [...data.preImportModules, ...data.postImportModules] : [],
             'canvasOU': data.canvasOU || '',
             'checkStandards:': false,
