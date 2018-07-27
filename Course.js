@@ -62,12 +62,7 @@ module.exports = class Course {
             }
         };
 
-        if (this.settings.platform === 'campus') {
-            this.info.courseName = this.info.fileName.split(`- ${data.instructorEmail}`)[0];
-        } else {
-            this.info.courseName = this.info.fileName.split('.zip')[0];
-        }
-
+        this.info.courseName = this.info.fileName.split('.zip')[0];
         this.info.courseCode = (this.info.fileName.split(' ')[0] + ' ' + this.info.fileName.split(' ')[1]).replace(':', '');
         this.info.courseCode = this.info.courseCode.replace('.zip', '');
         console.log('COURSE NAME:', this.info.courseName);
