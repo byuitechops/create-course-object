@@ -25,6 +25,7 @@ module.exports = class Course {
             'renameFiles': false,
             'moveFiles': false,
             'moduleItemNamingConventions': false,
+            'term': data.EnrollmentTerm || null
         };
 
         /* Identify the selected options and add them to settings */
@@ -32,6 +33,11 @@ module.exports = class Course {
             data.options.forEach(option => {
                 this.settings[option.name] = option.value;
             });
+        }
+
+        /* Add leading 20 to enrollment term year. This will break in 900+ years */
+        if (this.settings.term) {
+            this.settings.term = this.settings.term.replace(/\d+/, '20$&');
         }
 
         this.info = {
