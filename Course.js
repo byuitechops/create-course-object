@@ -10,7 +10,7 @@ module.exports = class Course {
         this.settings = {
             'domain': data.domain || 'byui',
             'platform': data.platform || 'online',
-            'accountID': '19',
+            'accountID': data.platform === 'online'? '42':'19',
             'cookies': data.cookies || [],
             'deleteCourse': data.cleanUpModules ? data.cleanUpModules.includes('delete-course') : false,
             'removeFiles': data.cleanUpModules ? !data.cleanUpModules.includes('remove-files') : true,
