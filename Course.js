@@ -55,7 +55,7 @@ module.exports = class Course {
          'childModules': data.preImportModules && data.postImportModules ? [...data.preImportModules, ...data.postImportModules] : [],
          'canvasOU': data.canvasOU || '',
          'bannerDashboardImagesType': '',
-         'bannerDashboardImagesLocalFile': '',
+         'bannerDashboardImagesFileLocation': '',
          'checkStandards:': false,
          'linkCounter': 0,
          'canvasFolders': {
