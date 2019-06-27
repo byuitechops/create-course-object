@@ -5,12 +5,27 @@ const path = require('path');
 const Logger = require('logger');
 var logger = new Logger('Conversion Report');
 
+function getAccountID(data) {
+    var isAllNumbers = /^\d+$/;
+    var numberOut;
+    if(data.platform === "online") {
+        numberOut = '42';
+    }
+    else if (data.canvasAccountID !== undefined && typeof data.canvasAccountID === "string" && isAllNumbers.test(data.canvasAccountID)) {
+        numberOut = data.canvasAccountID;
+    } else{
+        numberOut = "19";
+    } 
+    console.log(numberOut);
+    return numberOut;
+}
+
 module.exports = class Course {
     constructor(data) {
         this.settings = {
             'domain': data.domain || 'byui',
             'platform': data.platform || 'online',
-            'accountID': data.platform === 'online'? '42':'19',
+            'accountID': getAccountID(data),
             'cookies': data.cookies || [],
             'deleteCourse': data.cleanUpModules ? data.cleanUpModules.includes('delete-course') : false,
             'removeFiles': data.cleanUpModules ? !data.cleanUpModules.includes('remove-files') : true,
@@ -83,6 +98,7 @@ module.exports = class Course {
         this.error = logger.error;
         this.fatalError = logger.fatalError;
         this.message = logger.message;
+        //console.log(logger.message);
         this.getCallingModule = logger.getCallingModule;
         this.console = logger.console;
 
